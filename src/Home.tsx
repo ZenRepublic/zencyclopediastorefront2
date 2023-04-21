@@ -653,17 +653,9 @@ const Home = (props: HomeProps) => {
                             <h2>ZENCYCLOPEDIA CHAPTER 1: RUBY</h2>
                             <div>Zencyclopedia is the grand book of knowledge about Zen Republic metasystem!</div>
                             <div>First chapter features rare animals, plants, mushrooms and artifacts of Planet Ruby. </div>
-                            <div>Collect them all and become a Vunderkind!</div>
-                            <div><a href="https://zenwiki.gitbook.io/zen-republic-wiki/nft-collections/zencyclopedia">Click here</a> for more info about Zencyclopedia.</div>
                             <br></br>
-                            <div>0 - 700 MINTED: 0.4 SOL (DONE)</div>
-                            <div>700 - 1300 MINTED: 0.6 SOL</div>
-                            <div>1300 - 1800 MINTED: 0.8 SOL</div>
-                            <div>1800 - 2200 MINTED: 1 SOL</div>
-                            <div>2200 - 2500 MINTED: 1.2 SOL</div>
-                            <div>2500 - 2700 MINTED: 1.4 SOL</div>
-                            <div>2700 - 2800 MINTED: 1.6 SOL</div>
-                            <div>2800 - 3160 For further incentives</div>
+                            <div>By collecting and merging Zencyclopedia Vades together, you will be able to craft Specialty Badges and enlighten Rubians with them!</div>
+                            <div><a href="https://zenwiki.gitbook.io/zen-republic-wiki/nft-collections/zencyclopedia">Click here</a> for more info about Zencyclopedia.</div>
                             <br></br>
                             <div><Price
                                 label={isActive && whitelistEnabled && (whitelistTokenBalance > 0) ? (whitelistPrice + " " + priceLabel) : (price + " " + priceLabel)}/><Image
