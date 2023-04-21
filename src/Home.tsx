@@ -654,7 +654,8 @@ const Home = (props: HomeProps) => {
                             <div>Zencyclopedia is the grand book of knowledge about Zen Republic metasystem!</div>
                             <div>First chapter features rare animals, plants, mushrooms and artifacts of Planet Ruby. </div>
                             <br></br>
-                            <div>By collecting and merging Zencyclopedia Vades together, you will be able to craft Specialty Badges and enlighten Rubians with them!</div>
+                            <div>By collecting and merging Zencyclopedia Vades together, you will be able to craft Specialty Badges.</div>
+                            <div>Badges will be used to enlighted Rubians with Specialties!</div>
                             <div><a href="https://zenwiki.gitbook.io/zen-republic-wiki/nft-collections/zencyclopedia">Click here</a> for more info about Zencyclopedia.</div>
                             <br></br>
                             <div><Price
