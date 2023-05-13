@@ -8,15 +8,12 @@ import * as anchor from "@project-serum/anchor";
 import { clusterApiUrl } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
-    getPhantomWallet,
-    getSlopeWallet,
-    getSolflareWallet,
-    getSolflareWebWallet,
-    getSolletWallet,
-    getSolletExtensionWallet,
-    getSolongWallet,
-    getLedgerWallet,
-    getSafePalWallet,
+    PhantomWalletAdapter,
+    SolflareWalletAdapter,
+    BackpackWalletAdapter,
+    SlopeWalletAdapter,
+    GlowWalletAdapter,
+    TorusWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 
 import {
@@ -85,15 +82,12 @@ const App = () => {
     // of wallets that your users connect to will be loaded.
     const wallets = useMemo(
         () => [
-            getPhantomWallet(),
-            getSlopeWallet(),
-            getSolflareWallet(),
-            getSolflareWebWallet(),
-            getSolletWallet({ network }),
-            getSolletExtensionWallet({ network }),
-            getSolongWallet(),
-            getLedgerWallet(),
-            getSafePalWallet(),
+            new PhantomWalletAdapter(),
+            new SolflareWalletAdapter(),
+            new BackpackWalletAdapter(),
+            new GlowWalletAdapter(),
+            new SlopeWalletAdapter(),
+            new TorusWalletAdapter(),
         ],
         []
     );
