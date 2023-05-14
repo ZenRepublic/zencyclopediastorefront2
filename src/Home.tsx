@@ -1,4 +1,5 @@
 import {useCallback, useEffect, useMemo, useState} from "react";
+import { Buffer } from 'buffer';
 import styled from "styled-components";
 import confetti from "canvas-confetti";
 import * as anchor from "@project-serum/anchor";
@@ -28,6 +29,9 @@ import {
     mintOneToken,
     SetupState,
 } from "./candy-machine";
+
+// @ts-ignore
+window.Buffer = Buffer;
 
 const cluster = process.env.REACT_APP_SOLANA_NETWORK!.toString();
 const decimals = process.env.REACT_APP_SPL_TOKEN_TO_MINT_DECIMALS ? +process.env.REACT_APP_SPL_TOKEN_TO_MINT_DECIMALS!.toString() : 9;
