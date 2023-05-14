@@ -665,7 +665,7 @@ const Home = (props: HomeProps) => {
                             <br/>
                             {wallet && isActive && whitelistEnabled && (whitelistTokenBalance > 0) && isBurnToken &&
                               <h3>You own {whitelistTokenBalance} free
-                                mint {whitelistTokenBalance > 1 ? "tokens" : "token "}.</h3>}
+                                mint {whitelistTokenBalance > 1 ? "tokens" : "token"}.</h3>}
                             {wallet && isActive && whitelistEnabled && (whitelistTokenBalance > 0) && !isBurnToken &&
                               <h3>You are whitelisted and allowed to mint.</h3>}
                             {wallet && isActive && endDate && Date.now() < endDate.getTime() &&
