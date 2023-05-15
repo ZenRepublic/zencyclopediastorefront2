@@ -5,6 +5,7 @@ import {
     SystemProgram,
     Transaction,
     SYSVAR_SLOT_HASHES_PUBKEY,
+    TransactionInstruction,
 } from '@solana/web3.js';
 import { sendTransactions, SequenceType } from './connection';
 
@@ -15,6 +16,7 @@ import {
     getNetworkToken,
     SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
 } from './utils';
+import { Console } from 'console';
 
 export const CANDY_MACHINE_PROGRAM = new anchor.web3.PublicKey(
     'cndy3Z4yapfJBmL3ShUp5exZKqR3z33thTzeNMm2gRZ',
@@ -161,7 +163,7 @@ export const getCandyMachineState = async (
     candyMachineId: anchor.web3.PublicKey,
     connection: anchor.web3.Connection,
 ): Promise<CandyMachineAccount> => {
-    const provider = new anchor.Provider(connection, anchorWallet, {
+    const provider = new anchor.AnchorProvider(connection, anchorWallet, {
         preflightCommitment: 'processed',
     });
 
@@ -327,7 +329,7 @@ export const createAccountsForMint = async (
         transaction: (
             await sendTransactions(
                 candyMachine.program.provider.connection,
-                candyMachine.program.provider.wallet,
+                candyMachine.program.provider.publicKey,
                 [instructions],
                 [signers],
                 SequenceType.StopOnFailure,
@@ -364,8 +366,8 @@ export const mintOneToken = async (
         : payer;
 
     const candyMachineAddress = candyMachine.id;
-    const remainingAccounts = [];
-    const instructions = [];
+    const remainingAccounts : { pubkey: anchor.web3.PublicKey; isWritable: boolean; isSigner: boolean; }[] = [];
+    const instructions : TransactionInstruction[] = [];
     const signers: anchor.web3.Keypair[] = [];
     console.log('SetupState: ', setupState);
     if (!setupState) {
@@ -483,7 +485,7 @@ export const mintOneToken = async (
 
     console.log(remainingAccounts.map(rm => rm.pubkey.toBase58()));
     instructions.push(
-        await candyMachine.program.instruction.mintNft(creatorBump, {
+        candyMachine.program.instruction.mintNft(creatorBump, {
             accounts: {
                 candyMachine: candyMachineAddress,
                 candyMachineCreator,
@@ -502,8 +504,7 @@ export const mintOneToken = async (
                 recentBlockhashes: SYSVAR_SLOT_HASHES_PUBKEY,
                 instructionSysvarAccount: anchor.web3.SYSVAR_INSTRUCTIONS_PUBKEY,
             },
-            remainingAccounts:
-                remainingAccounts.length > 0 ? remainingAccounts : undefined,
+            remainingAccounts: remainingAccounts.length > 0 ? remainingAccounts : undefined,
         }),
     );
 
@@ -515,12 +516,13 @@ export const mintOneToken = async (
 
     if (collectionPDAAccount && candyMachine.state.retainAuthority) {
         try {
-            const collectionData =
-                (await candyMachine.program.account.collectionPda.fetch(
-                    collectionPDA,
-                )) as CollectionData;
-            console.log(collectionData);
-            const collectionMint = collectionData.mint;
+            const data: any =await candyMachine.program.account.collectionPda.fetch(
+                collectionPDA);
+                // (await candyMachine.program.account.collectionPda.fetch(
+                //     collectionPDA
+                // )) as CollectionData;
+            console.log(data);
+            const collectionMint = data.mint;
             const collectionAuthorityRecord = await getCollectionAuthorityRecordPDA(
                 collectionMint,
                 collectionPDA,
@@ -532,7 +534,7 @@ export const mintOneToken = async (
                 console.log('Collection PDA: ', collectionPDA.toBase58());
                 console.log('Authority: ', candyMachine.state.authority.toBase58());
                 instructions.push(
-                    await candyMachine.program.instruction.setCollectionDuringMint({
+                    candyMachine.program.instruction.setCollectionDuringMint({
                         accounts: {
                             candyMachine: candyMachineAddress,
                             metadata: metadataAddress,
@@ -561,7 +563,7 @@ export const mintOneToken = async (
         const txns = (
             await sendTransactions(
                 candyMachine.program.provider.connection,
-                candyMachine.program.provider.wallet,
+                candyMachine.program.provider.publicKey,
                 instructionsMatrix,
                 signersMatrix,
                 SequenceType.StopOnFailure,
