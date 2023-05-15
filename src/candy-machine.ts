@@ -329,7 +329,7 @@ export const createAccountsForMint = async (
         transaction: (
             await sendTransactions(
                 candyMachine.program.provider.connection,
-                candyMachine.program.provider.publicKey,
+                (candyMachine.program.provider as anchor.AnchorProvider).wallet,
                 [instructions],
                 [signers],
                 SequenceType.StopOnFailure,
@@ -563,7 +563,7 @@ export const mintOneToken = async (
         const txns = (
             await sendTransactions(
                 candyMachine.program.provider.connection,
-                candyMachine.program.provider.publicKey,
+                (candyMachine.program.provider as anchor.AnchorProvider).wallet,
                 instructionsMatrix,
                 signersMatrix,
                 SequenceType.StopOnFailure,
