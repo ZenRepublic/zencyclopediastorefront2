@@ -584,7 +584,7 @@ const Home = (props: HomeProps) => {
                 } else {
                     setAlertState({
                         open: true,
-                        message: 'Mint failed! Please try again!',
+                        message: 'Mint failed! Please try again! ',
                         severity: 'error',
                     });
                     refreshCandyMachineState();
